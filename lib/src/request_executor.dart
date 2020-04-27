@@ -12,7 +12,7 @@ class RequestExecutor {
     @required Configuration config,
     @required Map<String, String> filters,
   }) async {
-    var uri = Uri.https(config.host, path, filters);
+    var uri = Uri.https(config.host, '/dev$path', filters);
     var response = (await config.httpClient.get(uri, headers: {
       'X-SPACE-D-API-Key': apiKey,
     }).timeout(Duration(milliseconds: config.timeout)));
