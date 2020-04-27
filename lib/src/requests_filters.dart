@@ -2,22 +2,14 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 class GetContentFilters {
-  bool legacyMetadata;
   String publicId;
 
-  GetContentFilters({
-    @required this.publicId,
-    this.legacyMetadata
-  });
+  GetContentFilters({@required this.publicId,});
 
   Map<String, String> toQueryParametersMap() {
     var getContentFilters = <String, String> {
       'publicId': publicId
     };
-
-    if (legacyMetadata != null) {
-      getContentFilters['legacyMetadata'] = legacyMetadata.toString();
-    }
 
     return getContentFilters;
   }
