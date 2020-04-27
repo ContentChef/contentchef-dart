@@ -6,14 +6,6 @@ void main() {
   group('Filters classes tests', () {
 
     group('GetContentFilters tests', () {
-      test('toQueryParameters method with all parameters', () {
-        final getContentFilters = GetContentFilters(publicId: 'test-publicId', legacyMetadata: true);
-        final queryParamsMap = getContentFilters.toQueryParametersMap();
-        expect(queryParamsMap.length, equals(2));
-        expect(queryParamsMap.containsKey('publicId'), isTrue);
-        expect(queryParamsMap.containsKey('legacyMetadata'), isTrue);
-      });
-
       test('toQueryParams method will mandatory param publicId', () {
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
         final queryParamsMap = getContentFilters.toQueryParametersMap();
