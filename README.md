@@ -2,7 +2,7 @@
 
 Welcome to [ContentChef API-First CMS's](https://www.contentchef.io/) Dart/Flutter SDK.
 
-## How to use it
+## How to use ContentChef client
 
 **Dart/Flutter**
 
@@ -29,9 +29,9 @@ Both the `OnlineChannel` and the `PreviewChannel` have two methods which are `ge
 
 You can use the `getContent()` method to collect a specific content by its own `publicId`, for example to retrieve a single post from your blog, a single image from a gallery or a set of articles from your featured articles list. Otherwise you can use the `searchContents()` method to find contents with multiple matching criteria, like content definition name, publishing dates and more.
 
-## Examples
+### Examples
 
-### How to retrieve a content from your OnlineChannel
+#### How to retrieve a content from your OnlineChannel
 
 *SPACE_ID* can be retrieved from your [ContentChef's dashboard](https://app.contentchef.io/).
 
@@ -41,7 +41,7 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 ``` dart
 
-    // Retrieve the *content-chef-site* content from the live status:
+    Retrieve the *content-chef-site* content from the live status:
 
     void main() {
 
@@ -64,7 +64,7 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 ```
 
-### How to retrieve a content in the future from your PreviewChannel
+#### How to retrieve a content in the future from your PreviewChannel
 
 *SPACE_ID* can be retrieved from your [ContentChef's dashboard](https://app.contentchef.io/).
 
@@ -102,7 +102,7 @@ You can use the `getContent()` method to collect a specific content by its own `
       
 ```
 
-### How to Search for all the contents of a specific definition
+#### How to Search for all the contents of a specific definition
 
 *SPACE_ID* can be retrieved from your [ContentChef's dashboard](https://app.contentchef.io/).
 
@@ -110,7 +110,8 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 *PUBLISHING_CHANNEL* can be retrieved from your [ContentChef's dashboard](https://app.contentchef.io).
 
-```dart 
+``` dart
+ 
     // Search for 10 the contents created using the definition *content-chef-site*
    
     void main() {
@@ -130,6 +131,48 @@ You can use the `getContent()` method to collect a specific content by its own `
             print(e);
         }
     }
+
+```
+
+## How to use Media helper
+
+ If you request a content that contain a media field, it will return its publicId as value of the field.
+ In order to retrieve the media public url, you will need to use the `Media` helper class.
+ 
+### Examples 
+
+#### How to retrieve a media without transformations
+
+``` dart
+
+    void main() {
+    
+        var mediaHelper = Media();
+        var publicUrl = mediaHelper.getUrl(publicId: 'your-field-media-publicId')
+
+        print(publicUrl);
+
+    }
+
+```
+
+#### How to retrieve a media without transformations
+
+``` dart
+    
+    // If you desire to have transformed media you can specify some parameters with the transformation parameter while getting your media publicUrl.
+    // The possible transformations are: mediaHeight, mediaWidth, autoFormat and mediaFormat, for more information refer to `MediaTransformations` class
+
+    void main() {
+    
+        var mediaHelper = Media();
+        var transformations = MediaTransformations(mediaWidth: 1000, mediaHeight: 1000);
+        var publicUrl = mediaHelper.getUrl(publicId: 'tst', transformations: transformations);
+
+        print(publicUrl);
+
+    }
+
 ```
 
 
