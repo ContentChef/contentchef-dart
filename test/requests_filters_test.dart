@@ -31,7 +31,7 @@ void main() {
             contentDefinition: ['definition-1', 'definition-2'],
             sorting: [SortingField(fieldName: 'publicId', ascending: true)],
             propFilters: PropFilters(
-                logicalConditions: LogicalConditions.AND,
+                logicalCondition: LogicalConditions.AND,
                 propFilerItems: [
                   PropFiltersItem(operator: Operators.CONTAINS, value: 'value-1', field: 'field_name'),
                 ]
@@ -107,7 +107,7 @@ void main() {
     group('PropFilters tests', () {
       test('toJson method', () {
         final propFilters = PropFilters(
-          logicalConditions: LogicalConditions.AND,
+          logicalCondition: LogicalConditions.AND,
           propFilerItems: [
             PropFiltersItem(field: 'field_1', value: 'value_1', operator: Operators.CONTAINS),
             PropFiltersItem(field: 'field_2', value: 'value_2', operator: Operators.CONTAINS_IC),
