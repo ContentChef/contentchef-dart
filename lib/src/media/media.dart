@@ -40,6 +40,10 @@ class Media {
   /// - Returns: the media public url
   ///
   String getUrl({ @required String publicId, MediaTransformations transformations}) {
+    if (publicId == null) {
+      throw Exception('A media publicId is mandatory to retrieve a media public url');
+    }
+
     var publicUrl = _defaultUrl
         .replaceAll(_cloudNameUrlParam, _cloudName)
         .replaceAll(_publicIdUrlParam, publicId);
