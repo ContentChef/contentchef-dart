@@ -8,12 +8,23 @@ import 'package:contentchef_dart/src/request_executor.dart';
 import 'package:contentchef_dart/src/requests_resources.dart';
 import 'package:contentchef_dart/src/target_date_resolver.dart';
 
+/// ContentChef OnlineChannel class used to retrieve contents in live status
+///
 class OnlineChannel {
   String _apiKey;
   String _publishingChannel;
   RequestExecutor _requestExecutor;
   Configuration _config;
 
+  /// Create a `OnlineChannel` instance.
+  ///
+  /// Parameters:
+  /// - apiKey: ContentChef online apiKey
+  /// - config: Configuration instance
+  /// - publishingChannel: the channel id where you want to retrieve published contents
+  /// - requestExecutor: RequestExecutor instance
+  /// - Returns: an instance of `OnlineChannel`.
+  ///
   OnlineChannel({
     @required String apiKey,
     @required Configuration config,
@@ -35,6 +46,14 @@ class OnlineChannel {
     _requestExecutor = requestExecutor;
   }
 
+  /// Retrieves a content by the parameters specified in `GetContentFilters`.
+  ///
+  /// - Parameters:
+  /// - filters: GetContentFilters instance
+  /// - Returns:
+  ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
+  ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to ContentResponse<T> failed;
+  ///
   Future<ContentResponse<T>> getContent<T>({
     @required GetContentFilters filters
   }) async {
@@ -43,6 +62,14 @@ class OnlineChannel {
     return result;
   }
 
+  /// Retrieves contents by the parameters specified in `SearchContentFilters`.
+  ///
+  /// - Parameters:
+  /// - filters: SearchContentFilters instance
+  /// - Returns:
+  ///     Success => returns an instance of PaginatedResponse<T> with items (ContentResponse<T>) attribute of the defined type.
+  ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to PaginatedResponse<T> failed;
+  ///
   Future<PaginatedResponse<T>> searchContents<T>({
     @required SearchContentsFilters filters
   }) async {
@@ -51,6 +78,8 @@ class OnlineChannel {
   }
 }
 
+/// ContentChef PreviewChannel class used to retrieve contents in live or staging status
+///
 class PreviewChannel extends RequestExecutor {
   String _apiKey;
   String _publishingChannel;
@@ -59,6 +88,16 @@ class PreviewChannel extends RequestExecutor {
   Configuration _config;
   RequestExecutor _requestExecutor;
 
+  /// Create a `PreviewChannel` instance.
+  ///
+  /// Parameters:
+  /// - apiKey: ContentChef preview apiKey
+  /// - status: the publishing status where you want to retrieve contents (i.e. staging or live)
+  /// - config: Configuration instance
+  /// - publishingChannel: the channel id where you want to retrieve published contents
+  /// - requestExecutor: RequestExecutor instance
+  /// - Returns: an instance of `PreviewChannel`.
+  ///
   PreviewChannel({
     @required String apiKey,
     @required PublishingStatus status,
@@ -87,6 +126,14 @@ class PreviewChannel extends RequestExecutor {
     _requestExecutor = requestExecutor;
   }
 
+  /// Retrieves a content by the parameters specified in `GetContentFilters`.
+  ///
+  /// - Parameters:
+  /// - filters: GetContentFilters instance
+  /// - Returns:
+  ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
+  ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to ContentResponse<T> failed;
+  ///
   Future<ContentResponse<T>> getContent<T>({
     @required GetContentFilters filters,
   }) async {
@@ -99,6 +146,14 @@ class PreviewChannel extends RequestExecutor {
     return await _requestExecutor.executeGetContentRequest<T>(path: previewContentPath, apiKey: _apiKey, config: _config, filters: filters);
   }
 
+  /// Retrieves contents by the parameters specified in `SearchContentFilters`.
+  ///
+  /// - Parameters:
+  /// - filters: SearchContentFilters instance
+  /// - Returns:
+  ///     Success => returns an instance of PaginatedResponse<T> with items (ContentResponse<T>) attribute of the defined type.
+  ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to PaginatedResponse<T> failed;
+  ///
   Future<PaginatedResponse<T>> searchContents<T>({
     @required SearchContentsFilters filters,
   }) async {
