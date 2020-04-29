@@ -1,7 +1,11 @@
 name: contentchef_dart
-description: A starting point for Dart libraries or applications.
-# version: 1.0.0
-# homepage: https://www.example.com
+description: The headless CMS designed to accelerate the success of any digital experience. This is the client for any dart/flutter applications.
+authors:
+  - ContentChef Team <support@contentchef.io>
+version: 1.0.0
+homepage: https://www.contentchef.io
+repository: https://github.com/dart-lang/http
+documentation: https://docs.contentchef.io/
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
