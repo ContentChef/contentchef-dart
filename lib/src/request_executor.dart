@@ -9,7 +9,6 @@ import 'package:meta/meta.dart';
 /// ContentChef RequestExecutor class (internal use only)
 ///
 class RequestExecutor {
-
   /// Resolve all api requests
   ///
   /// Parameters:
@@ -76,7 +75,11 @@ class RequestExecutor {
     @required GetContentFilters filters,
   }) async {
     try {
-      var requestBodyResult = await _executeRequest(path: path, apiKey: apiKey, config: config, filters: filters.toQueryParametersMap());
+      var requestBodyResult = await _executeRequest(
+          path: path,
+          apiKey: apiKey,
+          config: config,
+          filters: filters.toQueryParametersMap());
       return ContentResponse<T>(requestBodyResult);
     } catch (e) {
       rethrow;
@@ -103,7 +106,11 @@ class RequestExecutor {
     @required SearchContentsFilters filters,
   }) async {
     try {
-      var requestBodyResult = await _executeRequest(path: path, apiKey: apiKey, config: config, filters: filters.toQueryParametersMap());
+      var requestBodyResult = await _executeRequest(
+          path: path,
+          apiKey: apiKey,
+          config: config,
+          filters: filters.toQueryParametersMap());
       return PaginatedResponse<T>(requestBodyResult);
     } catch (e) {
       rethrow;

@@ -25,13 +25,13 @@ class ResponseMetadata {
 
   /// Method used to encode SortingField as JSON object
   Map<String, dynamic> toJson() => {
-    'authoringContentId': authoringContentId,
-    'contentVersion': contentVersion,
-    'id': id,
-    'contentLastModifiedDate': contentLastModifiedDate,
-    'publishedOn': publishedOn,
-    'tags': tags,
-  };
+        'authoringContentId': authoringContentId,
+        'contentVersion': contentVersion,
+        'id': id,
+        'contentLastModifiedDate': contentLastModifiedDate,
+        'publishedOn': publishedOn,
+        'tags': tags,
+      };
 }
 
 /// ContentChef requestContents class mapper
@@ -57,11 +57,11 @@ class RequestContext {
 
   /// Method used to encode SortingField as JSON object
   Map<String, dynamic> toJson() => {
-    'publishingChannel': publishingChannel,
-    'targetDate': targetDate,
-    'cloudName': cloudName,
-    'timestamp': timestamp
-  };
+        'publishingChannel': publishingChannel,
+        'targetDate': targetDate,
+        'cloudName': cloudName,
+        'timestamp': timestamp
+      };
 }
 
 /// ContentChef ContentResponse class mapper for a specified content T
@@ -95,15 +95,15 @@ class ContentResponse<T> {
 
   /// Method used to encode SortingField as JSON object
   Map<String, dynamic> toJson() => {
-    'definition': definition,
-    'repository': repository,
-    'publicId': publicId,
-    'offlineDate': offlineDate,
-    'onlineDate': onlineDate,
-    'metadata': metadata,
-    'payload': payload,
-    'requestContext': requestContext,
-  };
+        'definition': definition,
+        'repository': repository,
+        'publicId': publicId,
+        'offlineDate': offlineDate,
+        'onlineDate': onlineDate,
+        'metadata': metadata,
+        'payload': payload,
+        'requestContext': requestContext,
+      };
 }
 
 class PaginatedResponse<T> {
@@ -120,7 +120,8 @@ class PaginatedResponse<T> {
   /// - Returns: an instance of 'PaginatedResponse'
   ///
   PaginatedResponse(Map<String, dynamic> data) {
-    items = List<ContentResponse<T>>.from(data['items'].map((item)=> ContentResponse(item)));
+    items = List<ContentResponse<T>>.from(
+        data['items'].map((item) => ContentResponse(item)));
     total = data['total'];
     skip = data['skip'];
     take = data['take'];

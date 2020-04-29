@@ -25,20 +25,22 @@ class OnlineChannel {
   /// - requestExecutor: RequestExecutor instance
   /// - Returns: an instance of `OnlineChannel`.
   ///
-  OnlineChannel({
-    @required String apiKey,
-    @required Configuration config,
-    @required String publishingChannel,
-    @required RequestExecutor requestExecutor
-  }) {
+  OnlineChannel(
+      {@required String apiKey,
+      @required Configuration config,
+      @required String publishingChannel,
+      @required RequestExecutor requestExecutor}) {
     if (apiKey == null) {
-      throw Exception('the online apiKey cannot be null to configure the online channel');
+      throw Exception(
+          'the online apiKey cannot be null to configure the online channel');
     }
     if (publishingChannel == null) {
-      throw Exception('the publishing channel cannot be null to configure the online channel');
+      throw Exception(
+          'the publishing channel cannot be null to configure the online channel');
     }
     if (requestExecutor == null) {
-      throw Exception('a request executor must be defined to configure the preview channel');
+      throw Exception(
+          'a request executor must be defined to configure the preview channel');
     }
     _apiKey = apiKey;
     _publishingChannel = publishingChannel;
@@ -54,11 +56,17 @@ class OnlineChannel {
   ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to ContentResponse<T> failed;
   ///
-  Future<ContentResponse<T>> getContent<T>({
-    @required GetContentFilters filters
-  }) async {
-    var onlineContentPath = getOnlinePath(spaceId: _config.spaceId, requestType: RequestTypes.content, channel: _publishingChannel);
-    var result = await _requestExecutor.executeGetContentRequest<T>(path: onlineContentPath, apiKey: _apiKey, config: _config, filters: filters);
+  Future<ContentResponse<T>> getContent<T>(
+      {@required GetContentFilters filters}) async {
+    var onlineContentPath = getOnlinePath(
+        spaceId: _config.spaceId,
+        requestType: RequestTypes.content,
+        channel: _publishingChannel);
+    var result = await _requestExecutor.executeGetContentRequest<T>(
+        path: onlineContentPath,
+        apiKey: _apiKey,
+        config: _config,
+        filters: filters);
     return result;
   }
 
@@ -70,11 +78,17 @@ class OnlineChannel {
   ///     Success => returns an instance of PaginatedResponse<T> with items (ContentResponse<T>) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to PaginatedResponse<T> failed;
   ///
-  Future<PaginatedResponse<T>> searchContents<T>({
-    @required SearchContentsFilters filters
-  }) async {
-    var onlineSearchPath = getOnlinePath(spaceId: _config.spaceId, requestType: RequestTypes.search, channel: _publishingChannel);
-    return await _requestExecutor.executeSearchContentsRequest<T>(path: onlineSearchPath, apiKey: _apiKey, config: _config, filters: filters);
+  Future<PaginatedResponse<T>> searchContents<T>(
+      {@required SearchContentsFilters filters}) async {
+    var onlineSearchPath = getOnlinePath(
+        spaceId: _config.spaceId,
+        requestType: RequestTypes.search,
+        channel: _publishingChannel);
+    return await _requestExecutor.executeSearchContentsRequest<T>(
+        path: onlineSearchPath,
+        apiKey: _apiKey,
+        config: _config,
+        filters: filters);
   }
 }
 
@@ -98,25 +112,28 @@ class PreviewChannel extends RequestExecutor {
   /// - requestExecutor: RequestExecutor instance
   /// - Returns: an instance of `PreviewChannel`.
   ///
-  PreviewChannel({
-    @required String apiKey,
-    @required PublishingStatus status,
-    @required Configuration config,
-    @required String publishingChannel,
-    @required RequestExecutor requestExecutor,
-    TargetDateResolver targetDateResolver
-  }) {
+  PreviewChannel(
+      {@required String apiKey,
+      @required PublishingStatus status,
+      @required Configuration config,
+      @required String publishingChannel,
+      @required RequestExecutor requestExecutor,
+      TargetDateResolver targetDateResolver}) {
     if (apiKey == null) {
-      throw Exception('a preview apiKey must be defined to configure the preview channel');
+      throw Exception(
+          'a preview apiKey must be defined to configure the preview channel');
     }
     if (status == null) {
-      throw Exception('a status must be defined to configure the preview channel');
+      throw Exception(
+          'a status must be defined to configure the preview channel');
     }
     if (publishingChannel == null) {
-      throw Exception('a publishing channel must be defined to configure the preview channel');
+      throw Exception(
+          'a publishing channel must be defined to configure the preview channel');
     }
     if (requestExecutor == null) {
-      throw Exception('a request executor must be defined to configure the preview channel');
+      throw Exception(
+          'a request executor must be defined to configure the preview channel');
     }
     _apiKey = apiKey;
     _status = status;
@@ -137,13 +154,23 @@ class PreviewChannel extends RequestExecutor {
   Future<ContentResponse<T>> getContent<T>({
     @required GetContentFilters filters,
   }) async {
-    var previewContentPath = getPreviewPath(spaceId: _config.spaceId, requestType: RequestTypes.content, status: _status, channel: _publishingChannel);
+    var previewContentPath = getPreviewPath(
+        spaceId: _config.spaceId,
+        requestType: RequestTypes.content,
+        status: _status,
+        channel: _publishingChannel);
     var getContentFilters = filters.toQueryParametersMap();
-    var targetDate = _targetDateResolver != null ? await _targetDateResolver.targetDate() : null;
+    var targetDate = _targetDateResolver != null
+        ? await _targetDateResolver.targetDate()
+        : null;
     if (targetDate != null) {
       getContentFilters['targetDate'] = targetDate;
     }
-    return await _requestExecutor.executeGetContentRequest<T>(path: previewContentPath, apiKey: _apiKey, config: _config, filters: filters);
+    return await _requestExecutor.executeGetContentRequest<T>(
+        path: previewContentPath,
+        apiKey: _apiKey,
+        config: _config,
+        filters: filters);
   }
 
   /// Retrieves contents by the parameters specified in `SearchContentFilters`.
@@ -157,12 +184,22 @@ class PreviewChannel extends RequestExecutor {
   Future<PaginatedResponse<T>> searchContents<T>({
     @required SearchContentsFilters filters,
   }) async {
-    var previewSearchPath = getPreviewPath(spaceId: _config.spaceId, requestType: RequestTypes.search, status: _status, channel: _publishingChannel);
+    var previewSearchPath = getPreviewPath(
+        spaceId: _config.spaceId,
+        requestType: RequestTypes.search,
+        status: _status,
+        channel: _publishingChannel);
     var searchContentsFilters = filters.toQueryParametersMap();
-    var targetDate = _targetDateResolver != null ? await _targetDateResolver.targetDate() : null;
+    var targetDate = _targetDateResolver != null
+        ? await _targetDateResolver.targetDate()
+        : null;
     if (targetDate != null) {
       searchContentsFilters['targetDate'] = targetDate;
     }
-    return await _requestExecutor.executeSearchContentsRequest(path: previewSearchPath, apiKey: _apiKey, config: _config, filters: filters);
+    return await _requestExecutor.executeSearchContentsRequest(
+        path: previewSearchPath,
+        apiKey: _apiKey,
+        config: _config,
+        filters: filters);
   }
 }

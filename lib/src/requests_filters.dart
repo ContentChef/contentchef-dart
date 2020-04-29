@@ -18,9 +18,7 @@ class GetContentFilters {
 
   /// Method used to transform GetContentFilters class in a queryParams map (Map<String, String>) to encode in request url
   Map<String, String> toQueryParametersMap() {
-    var getContentFilters = <String, String> {
-      'publicId': publicId
-    };
+    var getContentFilters = <String, String>{'publicId': publicId};
 
     return getContentFilters;
   }
@@ -44,16 +42,13 @@ class SortingField {
   /// Parameters:
   /// - fieldName: the field that you want to use to sort [it can be: onlineDate | offlineDate | publicId | (a payload field name)]
   /// - Returns: an instance of `SortingField`.
-  SortingField({
-    @required this.fieldName,
-    @required this.ascending
-  });
+  SortingField({@required this.fieldName, @required this.ascending});
 
   /// Method used to encode SortingField as JSON object
   Map<String, dynamic> toJson() => {
-    'ascending': ascending,
-    'fieldName': fieldName,
-  };
+        'ascending': ascending,
+        'fieldName': fieldName,
+      };
 }
 
 /// An enum class that enumerates the PropFilters conditions
@@ -70,6 +65,7 @@ class LogicalConditions {
   String toString() {
     return _value;
   }
+
   static const LogicalConditions AND = LogicalConditions._('AND');
   static const LogicalConditions OR = LogicalConditions._('OR');
 }
@@ -94,6 +90,7 @@ class Operators {
   String toString() {
     return _value;
   }
+
   static const Operators CONTAINS = Operators._('CONTAINS');
   static const Operators CONTAINS_IC = Operators._('CONTAINS_IC');
   static const Operators EQUALS = Operators._('EQUALS');
@@ -125,18 +122,15 @@ class PropFiltersItem {
   /// - operator: instance of Operators;
   /// - Returns: an instance of `SortingField`.
   ///
-  PropFiltersItem({
-    @required this.field,
-    @required this.value,
-    @required this.operator
-  });
+  PropFiltersItem(
+      {@required this.field, @required this.value, @required this.operator});
 
   /// Method used to encode SortingField as JSON object
   Map<String, dynamic> toJson() => {
-    'field': field,
-    'value': value,
-    'operator': operator.toString(),
-  };
+        'field': field,
+        'value': value,
+        'operator': operator.toString(),
+      };
 }
 
 /// PropFilter used to search contents that match the criteria inside the items attribute
@@ -157,19 +151,16 @@ class PropFilters {
   /// - items: List of PropFilterItem instance
   /// - Returns: an instance of `PropFilters`.
   ///
-  PropFilters({
-    @required LogicalConditions logicalCondition,
-    @required List<PropFiltersItem> propFilerItems
-  }) {
+  PropFilters(
+      {@required LogicalConditions logicalCondition,
+      @required List<PropFiltersItem> propFilerItems}) {
     condition = logicalCondition;
     items = propFilerItems;
   }
 
   /// Method used to encode SortingField as JSON object
-  Map<String, dynamic> toJson() => {
-    'condition': condition.toString(),
-    'items': items
-  };
+  Map<String, dynamic> toJson() =>
+      {'condition': condition.toString(), 'items': items};
 }
 
 /// The searchContents request filters configuration
@@ -201,20 +192,19 @@ class SearchContentsFilters {
   /// - propFilters: instance of PropFilters
   /// - Returns: an instance of `SearchContentsFilters`.
   ///
-  SearchContentsFilters({
-    @required this.skip,
-    @required this.take,
-    this.publicId,
-    this.contentDefinition,
-    this.repositories,
-    this.tags,
-    this.sorting,
-    this.propFilters
-  });
+  SearchContentsFilters(
+      {@required this.skip,
+      @required this.take,
+      this.publicId,
+      this.contentDefinition,
+      this.repositories,
+      this.tags,
+      this.sorting,
+      this.propFilters});
 
   /// Method used to transform SearchContentsFilters in a queryParams map (Map<String, String>) to encode in request url
   Map<String, String> toQueryParametersMap() {
-    var searchFiltersMap = <String, String> {
+    var searchFiltersMap = <String, String>{
       'skip': skip.toString(),
       'take': take.toString(),
     };
