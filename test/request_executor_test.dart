@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:contentchef_dart/src/errors.dart';
 import 'package:test/test.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
@@ -61,20 +62,65 @@ void main() {
         );
         expect(await result, const TypeMatcher<ContentResponse>());
       });
-      test('throw an exception if the http request fail', () async {
+      test('throw a BadRequestException if the http response status code is equal 400', () async {
         final mockedConfiguration = Configuration(
             spaceId: 'test-spaceId',
             host: 'fake-host-for-tests',
             timeout: 5000,
             client: MockClient((request) async {
-              return Response('Not Found', 404);
+              return Response('{}', 400);
             })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
         final result = RequestExecutor().executeGetContentRequest(
             path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
         );
-        expect(() async => await result, throwsException);
+        expect(() async => await result, throwsA(isA<BadRequestException>()));
+      });
+      test('throw a ForbiddenException if the http response status code is equal 403', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 403);
+            })
+        );
+        final getContentFilters = GetContentFilters(publicId: 'test-publicId');
+        final result = RequestExecutor().executeGetContentRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<ForbiddenException>()));
+      });
+      test('throw a NotFoundException if the http response status code is equal 404', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 404);
+            })
+        );
+        final getContentFilters = GetContentFilters(publicId: 'test-publicId');
+        final result = RequestExecutor().executeGetContentRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<NotFoundException>()));
+      });
+      test('throw a GenericErrorException otherwise', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 500);
+            })
+        );
+        final getContentFilters = GetContentFilters(publicId: 'test-publicId');
+        final result = RequestExecutor().executeGetContentRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<GenericErrorException>()));
       });
     });
 
@@ -94,20 +140,65 @@ void main() {
         );
         expect(await result, const TypeMatcher<PaginatedResponse>());
       });
-      test('throw an exception if the http request fail', () async {
+      test('throw a BadRequestException if the http response status code is equal 400', () async {
         final mockedConfiguration = Configuration(
             spaceId: 'test-spaceId',
             host: 'fake-host-for-tests',
             timeout: 5000,
             client: MockClient((request) async {
-              return Response('Forbidden', 503);
+              return Response('{}', 400);
             })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
         final result = RequestExecutor().executeSearchContentsRequest(
             path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
         );
-        expect(() async => await result, throwsException);
+        expect(() async => await result, throwsA(isA<BadRequestException>()));
+      });
+      test('throw a ForbiddenException if the http response status code is equal 403', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 403);
+            })
+        );
+        final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
+        final result = RequestExecutor().executeSearchContentsRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<ForbiddenException>()));
+      });
+      test('throw a NotFoundException if the http response status code is equal 404', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 404);
+            })
+        );
+        final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
+        final result = RequestExecutor().executeSearchContentsRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<NotFoundException>()));
+      });
+      test('throw a GenericErrorException otherwise', () async {
+        final mockedConfiguration = Configuration(
+            spaceId: 'test-spaceId',
+            host: 'fake-host-for-tests',
+            timeout: 5000,
+            client: MockClient((request) async {
+              return Response('{}', 500);
+            })
+        );
+        final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
+        final result = RequestExecutor().executeSearchContentsRequest(
+            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        );
+        expect(() async => await result, throwsA(isA<GenericErrorException>()));
       });
     });
   });
