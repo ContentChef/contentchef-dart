@@ -23,9 +23,12 @@ class ContentChef {
   /// - configuration: Instance of Configuration
   /// - targetDateResolver: Instance of TargetDateResolver, if you plan to setup a test environment use it to retrieve contents, for examples in the future through the preview channel
   /// - Returns: an instance of `ContentChef`.
-  ContentChef({ @required Configuration configuration, TargetDateResolver targetDateResolver }) {
+  ContentChef(
+      {@required Configuration configuration,
+      TargetDateResolver targetDateResolver}) {
     if (configuration == null) {
-      throw Exception('the configuration cannot be null to configure ContenChef client');
+      throw Exception(
+          'the configuration cannot be null to configure ContenChef client');
     }
     _configuration = configuration;
     _targetDateResolver = targetDateResolver;
@@ -40,7 +43,8 @@ class ContentChef {
   /// - apiKey: your Online apiKey, you can retrieve it from your contentChef dashboard homepage
   /// - publishingChannel: the channel id where you want to retrieve published contents
   /// - Return: an instance of `OnlineChannel`
-  OnlineChannel getOnlineChannel({ @required String apiKey, @required String publishingChannel }) {
+  OnlineChannel getOnlineChannel(
+      {@required String apiKey, @required String publishingChannel}) {
     return OnlineChannel(
       apiKey: apiKey,
       publishingChannel: publishingChannel,
@@ -56,7 +60,10 @@ class ContentChef {
   /// - status: the publishing status where you want to retrieve contents (i.e. stage or live)
   /// - publishingChannel: the channel id where you want to retrieve published contents
   /// - Return: an instance of `PreviewChannel`
-  PreviewChannel getPreviewChannel({ @required String apiKey, @required PublishingStatus status, @required String publishingChannel }) {
+  PreviewChannel getPreviewChannel(
+      {@required String apiKey,
+      @required PublishingStatus status,
+      @required String publishingChannel}) {
     return PreviewChannel(
       apiKey: apiKey,
       status: status,

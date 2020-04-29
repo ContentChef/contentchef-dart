@@ -17,7 +17,7 @@ class TargetDateResolver {
   /// Parameters:
   /// - targetDateSource: a valid targetDateSource is a String | TargetDetDef
   /// - Returns: an instance of `TargetDateResolver`.
-  TargetDateResolver({ dynamic targetDateSource }) {
+  TargetDateResolver({dynamic targetDateSource}) {
     if (targetDateSource is String || targetDateSource == null) {
       _targetDateResolver = _fixedTargetDate(fixedTargetDate: targetDateSource);
     } else if (targetDateSource is TargetDateDef) {
@@ -27,8 +27,10 @@ class TargetDateResolver {
     }
   }
 
-  TargetDateDef _fixedTargetDate({ String fixedTargetDate }) {
-    return () async { return await fixedTargetDate; };
+  TargetDateDef _fixedTargetDate({String fixedTargetDate}) {
+    return () async {
+      return await fixedTargetDate;
+    };
   }
 
   TargetDateDef get targetDate => _targetDateResolver;

@@ -19,7 +19,6 @@ class Configuration {
   int _timeout = _defaultTimeout;
   http.Client _httpClient;
 
-
   /// Initializes a new `ContentChef configuration` needed to initialize ContentChef Client.
   ///
   /// Parameters:
@@ -28,14 +27,14 @@ class Configuration {
   /// - timeout: a default timeout is configured (5000 ms), if you need an higher timeout configure it
   /// - client: a default httpClient is configure, to use a custom httpClient configure it
   /// - Returns: an instance of `Configuration`.
-  Configuration({
-    @required String spaceId,
-    String host = _defaultHost,
-    int timeout = _defaultTimeout,
-    http.Client client
-  }) {
+  Configuration(
+      {@required String spaceId,
+      String host = _defaultHost,
+      int timeout = _defaultTimeout,
+      http.Client client}) {
     if (spaceId == null) {
-      throw Exception('the spaceId cannot be null to create a ContentChef client configuration');
+      throw Exception(
+          'the spaceId cannot be null to create a ContentChef client configuration');
     }
     _spaceId = spaceId;
     _host = host;
