@@ -8,7 +8,7 @@ Welcome to [ContentChef API-First CMS's](https://www.contentchef.io/) Dart/Flutt
 
 Create your ContentChef instance like this:
 
-``` dart
+```
     import 'package:contentchef_dart/contentchef_dart.dart';
     
     void main() {
@@ -41,7 +41,7 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 ``` dart
 
-    Retrieve the *content-chef-site* content from the live status:
+    /// Retrieve the *content-chef-site* content from the live status:
 
     void main() {
 
@@ -49,15 +49,15 @@ You can use the `getContent()` method to collect a specific content by its own `
         
         var contentChef = (configuration: configuration);
 
-        var getContentFilters = GetContentFilters(publicId: 'content-chef-site);
+        var getContentFilters = GetContentFilters(publicId: 'content-chef-site');
     
         var onlineChannel = contentChef.getOnlineChannel(apiKey: ONLINE_API_KEY, publishingChannel: PUBLISHING_CHANNEL);
 
         try {
             var result = await onlineChannel.getContent(filters: getContentFilters);
-            print(jsonEncode(result);
+            print(jsonEncode(result));
         } catch(e) { 
-            print(e);
+            print(jsonEncode(e));
         }
 
     }
@@ -88,15 +88,15 @@ You can use the `getContent()` method to collect a specific content by its own `
 
         var contentChef = (configuration: configuration, targetDateResolver: targetDateResolver);
 
-        var getContentFilters = GetContentFilters(publicId: 'content-chef-site);
+        var getContentFilters = GetContentFilters(publicId: 'content-chef-site');
         
         var previewChannel = contentChef.previewChannel(apiKey: PREVIEW_API_KEY, publishingChannel: PUBLISHING_CHANNEL, status: PublishingStatus.live);
         
         try {
             var result = await previewChannel.getContent(filters: getContentFilters);
-            print(jsonEncode(result);
+            print(jsonEncode(result));
         } catch(e) { 
-            print(e);
+            print(jsonEncode(e));
         }
     }
       
@@ -110,7 +110,7 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 *PUBLISHING_CHANNEL* can be retrieved from your [ContentChef's dashboard](https://app.contentchef.io).
 
-``` dart
+```
  
     // Search for 10 the contents created using the definition *content-chef-site*
    
@@ -126,9 +126,9 @@ You can use the `getContent()` method to collect a specific content by its own `
         
         try {
             var result = await previewChannel.searchContents(filters: searchContentFilters);
-            print(jsonEncode(result);
+            print(jsonEncode(result));
         } catch(e) { 
-            print(e);
+            print(jsonEncode(e))
         }
     }
 
@@ -167,7 +167,7 @@ You can use the `getContent()` method to collect a specific content by its own `
     
         var mediaHelper = Media();
         var transformations = MediaTransformations(mediaWidth: 1000, mediaHeight: 1000);
-        var publicUrl = mediaHelper.getUrl(publicId: 'tst', transformations: transformations);
+        var publicUrl = mediaHelper.getUrl(publicId: 'your-field-media-publicId', transformations: transformations);
 
         print(publicUrl);
 
@@ -177,8 +177,6 @@ You can use the `getContent()` method to collect a specific content by its own `
 
 
 ## Installation
-
-Gradle is the only supported build configuration, so just add the dependency to your project `build.gradle` file.
 
 1. Depend on it
     
@@ -214,9 +212,10 @@ with Flutter:
 Alternatively, your editor might support pub get or flutter pub get. Check the docs for your editor to learn more.
 
 3. Import it
+
 Now in your Dart code, you can use:
 
-```dart
+``` dart
 
 import 'package:contentchef_dart/contentchef_dart.dart';
 
