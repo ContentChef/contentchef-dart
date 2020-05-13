@@ -203,7 +203,7 @@ class SearchContentsFilters {
       this.propFilters});
 
   /// Method used to transform SearchContentsFilters in a queryParams map (Map<String, dynamic>) to encode in request url
-  Map<String, dynamic /*String|Iterable<String>*/> toQueryParametersMap() {
+  Map<String, dynamic /*String|Iterable<String>*/ > toQueryParametersMap() {
     var searchFiltersMap = <String, dynamic>{
       'skip': skip.toString(),
       'take': take.toString(),

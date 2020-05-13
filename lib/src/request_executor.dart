@@ -27,9 +27,13 @@ class RequestExecutor {
     @required String path,
     @required String apiKey,
     @required Configuration config,
-    @required Map<String, dynamic /*String|Iterable<String>*/> filters,
+    @required Map<String, dynamic /*String|Iterable<String>*/ > filters,
   }) async {
-    var uri = Uri(scheme: 'https', host: config.host, path: path, queryParameters: filters);
+    var uri = Uri(
+        scheme: 'https',
+        host: config.host,
+        path: path,
+        queryParameters: filters);
     var response = (await config.httpClient.get(uri, headers: {
       'X-SPACE-D-API-Key': apiKey,
     }).timeout(Duration(milliseconds: config.timeout)));
