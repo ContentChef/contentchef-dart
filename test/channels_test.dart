@@ -20,7 +20,7 @@ void main () {
     final mockedGetResult = Future.value(MockedContentResponse());
     final mockedPaginatedResult = Future.value(MockedPaginatedResponse());
     group('OnlineChannel tests', () {
-      test('Initilize succesfully', () {
+      test('Initialize succesfully', () {
         expect(OnlineChannel(
           config: config,
           apiKey: apiKey,
@@ -30,7 +30,7 @@ void main () {
           const TypeMatcher<OnlineChannel>()
         );
       });
-      test('Initialize throw an exeption if apiKey is null', () {
+      test('Initialize throw an exception if apiKey is null', () {
         expect(() => OnlineChannel(
           config: config,
           apiKey: null,
@@ -39,7 +39,7 @@ void main () {
         ),
           throwsException);
       });
-      test('Initialize throw an exeption if publishingChannel is null', () {
+      test('Initialize throw an exception if publishingChannel is null', () {
         expect(() => OnlineChannel(
           config: config,
           apiKey: apiKey,
@@ -48,7 +48,7 @@ void main () {
         ),
           throwsException);
       });
-      test('Initialize throw an exeption if requestExecutor is null', () {
+      test('Initialize throw an exception if requestExecutor is null', () {
         expect(() => OnlineChannel(
           config: config,
           apiKey: apiKey,
@@ -100,7 +100,7 @@ void main () {
             const TypeMatcher<OnlineChannel>()
         );
       });
-      test('Initialize throw an exeption if apiKey is null', () {
+      test('Initialize throw an exception if apiKey is null', () {
         expect(() =>
             OnlineChannel(
               config: config,
@@ -111,7 +111,7 @@ void main () {
             throwsException
         );
       });
-      test('Initialize throw an exeption if publishingChannel is null', () {
+      test('Initialize throw an exception if publishingChannel is null', () {
         expect(() =>
             OnlineChannel(
               config: config,
@@ -122,7 +122,7 @@ void main () {
             throwsException
         );
       });
-      test('Initialize throw an exeption if requestExecutor is null', () {
+      test('Initialize throw an exception if requestExecutor is null', () {
         expect(() =>
             OnlineChannel(
               config: config,

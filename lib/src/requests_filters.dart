@@ -202,23 +202,23 @@ class SearchContentsFilters {
       this.sorting,
       this.propFilters});
 
-  /// Method used to transform SearchContentsFilters in a queryParams map (Map<String, String>) to encode in request url
-  Map<String, String> toQueryParametersMap() {
-    var searchFiltersMap = <String, String>{
+  /// Method used to transform SearchContentsFilters in a queryParams map (Map<String, dynamic>) to encode in request url
+  Map<String, dynamic /*String|Iterable<String>*/ > toQueryParametersMap() {
+    var searchFiltersMap = <String, dynamic>{
       'skip': skip.toString(),
       'take': take.toString(),
     };
     if (publicId != null) {
-      searchFiltersMap['publicId'] = publicId.toString();
+      searchFiltersMap['publicId'] = publicId.toList();
     }
     if (contentDefinition != null) {
-      searchFiltersMap['contentDefinition'] = contentDefinition.toString();
+      searchFiltersMap['contentDefinition'] = contentDefinition.toList();
     }
     if (repositories != null) {
-      searchFiltersMap['repositories'] = repositories.toString();
+      searchFiltersMap['repositories'] = repositories.toList();
     }
     if (tags != null) {
-      searchFiltersMap['tags'] = tags.toString();
+      searchFiltersMap['tags'] = tags.toList();
     }
     if (sorting != null) {
       searchFiltersMap['sorting'] = jsonEncode(sorting);

@@ -10,7 +10,7 @@ void main() async {
   try {
     var result = await contentChef
       .getPreviewChannel(apiKey: 'test-api-key', status: PublishingStatus.stage, publishingChannel: 'your-channel-mnemonicId')
-      .searchContents(filters: SearchContentsFilters(skip: 0, take: 10));
+      .searchContents(filters: SearchContentsFilters(skip: 0, take: 10, contentDefinition: ['top-site']));
       print(jsonEncode(result));
   } catch (e) {
     print(e);
