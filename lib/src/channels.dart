@@ -60,9 +60,10 @@ class OnlineChannel {
   Future<ContentResponse<T>> getContent<T>({
     @required GetContentFilters filters,
     @required FromJsonDef<T> fromJson,
-  })async {
+  }) async {
     if (fromJson == null) {
-      throw Exception('to correctly retrieve a content a fromJson function cannot be null');
+      throw Exception(
+          'to correctly retrieve a content a fromJson function cannot be null');
     }
     var onlineContentPath = getOnlinePath(
         spaceId: _config.spaceId,
@@ -92,12 +93,13 @@ class OnlineChannel {
     @required FromJsonDef<T> fromJson,
   }) async {
     if (fromJson == null) {
-      throw Exception('to correctly retrieve contents a fromJson function cannot be null');
+      throw Exception(
+          'to correctly retrieve contents a fromJson function cannot be null');
     }
     var onlineSearchPath = getOnlinePath(
-      spaceId: _config.spaceId,
-      requestType: RequestTypes.search,
-      channel: _publishingChannel);
+        spaceId: _config.spaceId,
+        requestType: RequestTypes.search,
+        channel: _publishingChannel);
     return await _requestExecutor.executeSearchContentsRequest<T>(
       path: onlineSearchPath,
       apiKey: _apiKey,
@@ -173,7 +175,8 @@ class PreviewChannel extends RequestExecutor {
     @required FromJsonDef<T> fromJson,
   }) async {
     if (fromJson == null) {
-      throw Exception('to correctly retrieve a content a fromJson function cannot be null');
+      throw Exception(
+          'to correctly retrieve a content a fromJson function cannot be null');
     }
     var previewContentPath = getPreviewPath(
         spaceId: _config.spaceId,
@@ -209,7 +212,8 @@ class PreviewChannel extends RequestExecutor {
     @required FromJsonDef<T> fromJson,
   }) async {
     if (fromJson == null) {
-      throw Exception('to correctly retrieve contents a fromJson function cannot be null');
+      throw Exception(
+          'to correctly retrieve contents a fromJson function cannot be null');
     }
     var previewSearchPath = getPreviewPath(
         spaceId: _config.spaceId,

@@ -24,14 +24,13 @@ class ResponseMetadata {
   /// - tags: List<String> (the content related tags)
   /// - Returns: an instance of ResponseMetadata;
   ///
-  ResponseMetadata({
-    this.authoringContentId,
-    this.contentLastModifiedDate,
-    this.contentVersion,
-    this.id,
-    this.publishedOn,
-    this.tags
-  });
+  ResponseMetadata(
+      {this.authoringContentId,
+      this.contentLastModifiedDate,
+      this.contentVersion,
+      this.id,
+      this.publishedOn,
+      this.tags});
 
   /// Create an instance of ResponseMetadata from a JSON object
   ///
@@ -45,8 +44,7 @@ class ResponseMetadata {
         id: json['id'] as int,
         contentLastModifiedDate: json['contentLastModifiedDate'] as String,
         publishedOn: json['publishedOn'] as String,
-        tags: List<String>.from(json['tags'])
-    );
+        tags: List<String>.from(json['tags']));
   }
 
   /// Method used to deserialize a ResponseMetadata class to JSON object
@@ -78,12 +76,11 @@ class RequestContext {
   /// - timestamp: String (request timestamp)
   /// - Returns: an instance of 'RequestContext'
   ///
-  RequestContext({
-    this.publishingChannel,
-    this.targetDate,
-    this.cloudName,
-    this.timestamp
-  });
+  RequestContext(
+      {this.publishingChannel,
+      this.targetDate,
+      this.cloudName,
+      this.timestamp});
 
   /// Create an instance of RequestContext from a json Map
   ///
@@ -135,16 +132,15 @@ class ContentResponse<T> {
   ///  - requestContext: RequestContext (instance of RequestContext);
   /// - Returns: an instance of 'ContentResponse'
   ///
-  ContentResponse({
-    this.definition,
-    this.repository,
-    this.publicId,
-    this.offlineDate,
-    this.onlineDate,
-    this.metadata,
-    this.payload,
-    this.requestContext
-  });
+  ContentResponse(
+      {this.definition,
+      this.repository,
+      this.publicId,
+      this.offlineDate,
+      this.onlineDate,
+      this.metadata,
+      this.payload,
+      this.requestContext});
 
   /// Create an instance of ContentResponse from a json Map
   ///
@@ -153,7 +149,8 @@ class ContentResponse<T> {
   /// - fromJson: FromJsonDef<T> function (used to serialize payload attribute as instance of T)
   /// - Returns: an instance of RequestContext
   ///
-  factory ContentResponse.fromJson(Map<String, dynamic> json, FromJsonDef<T> fromJson) {
+  factory ContentResponse.fromJson(
+      Map<String, dynamic> json, FromJsonDef<T> fromJson) {
     return ContentResponse(
       definition: json['definition'] as String,
       repository: json['repository'] as String,
@@ -161,7 +158,7 @@ class ContentResponse<T> {
       metadata: ResponseMetadata.fromJson(json['metadata']),
       offlineDate: json['offlineDate'] as String,
       onlineDate: json['onlineDate'] as String,
-      payload: fromJson(json['payload']) ,
+      payload: fromJson(json['payload']),
       requestContext: RequestContext.fromJson(json['requestContext']),
     );
   }
@@ -169,15 +166,15 @@ class ContentResponse<T> {
   /// Method used to deserialize a ContentResponse class to JSON object
   ///
   Map<String, dynamic> toJson() => {
-    'definition': definition,
-    'repository': repository,
-    'publicId': publicId,
-    'offlineDate': offlineDate,
-    'onlineDate': onlineDate,
-    'metadata': metadata,
-    'payload': payload,
-    'requestContext': requestContext,
-  };
+        'definition': definition,
+        'repository': repository,
+        'publicId': publicId,
+        'offlineDate': offlineDate,
+        'onlineDate': onlineDate,
+        'metadata': metadata,
+        'payload': payload,
+        'requestContext': requestContext,
+      };
 }
 
 /// ContentChef PaginatedResponse class mapper for a specified contents of type T
@@ -214,9 +211,11 @@ class PaginatedResponse<T> {
   /// - fromJson: FromJsonDef<T> function (used to serialize the items payload attribute as instance of T)
   /// - Returns: an instance of 'PaginatedResponse'
   ///
-  factory PaginatedResponse.fromJson(Map<String, dynamic> json, FromJsonDef<T> fromJson) {
+  factory PaginatedResponse.fromJson(
+      Map<String, dynamic> json, FromJsonDef<T> fromJson) {
     return PaginatedResponse(
-      items: List<ContentResponse<T>>.from(json['items'].map((item) => ContentResponse<T>.fromJson(item, fromJson))),
+      items: List<ContentResponse<T>>.from(json['items']
+          .map((item) => ContentResponse<T>.fromJson(item, fromJson))),
       total: json['total'] as int,
       skip: json['skip'] as int,
       take: json['take'] as int,
