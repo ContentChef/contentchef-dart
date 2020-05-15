@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:contentchef_dart/src/errors.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
@@ -24,7 +25,7 @@ final mockedContent = {
   'payload': { 'title': 'test title' },
   'requestContext': {
     'publishingChannel': 'testPublishingChannel',
-    'tagetDate': DateTime(2020).toIso8601String(),
+    'targetDate': DateTime(2020).toIso8601String(),
     'cloudName': 'testCloudName',
     'timestamp': DateTime(2020).toString(),
   }
@@ -37,166 +38,203 @@ final mockedSearch = {
   'take': 10,
   'requestContext': {
     'publishingChannel': 'testPublishingChannel',
-    'tagetDate': DateTime(2020).toIso8601String(),
+    'targetDate': DateTime(2020).toIso8601String(),
     'cloudName': 'testCloudName',
     'timestamp': DateTime(2020).toString(),
   }
 };
 
+class MockedContentResult {
+  String testAttribute;
+  String testAttribute2;
+
+  MockedContentResult({
+    this.testAttribute,
+    this.testAttribute2,
+  });
+
+  static MockedContentResult fromJson(Map<String, dynamic> json) {
+    return MockedContentResult(
+      testAttribute: json['testAttribute'] as String,
+      testAttribute2: json['testAttribute2'] as String,
+    );
+  }
+}
+
 
 void main() {
   group('Request executor tests', () {
     group('executeGetContentRequest tests', () {
-      test('return a ContentResponse if http request completes succesfully', () async {
+      test('return a ContentResponse if http request completes successfully', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response(jsonEncode(mockedContent), 200);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response(jsonEncode(mockedContent), 200); })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
-        final result = RequestExecutor().executeGetContentRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeGetContentRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(await result, const TypeMatcher<ContentResponse>());
       });
       test('throw a BadRequestException if the http response status code is equal 400', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 400);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 400); })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
-        final result = RequestExecutor().executeGetContentRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeGetContentRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<BadRequestException>()));
       });
       test('throw a ForbiddenException if the http response status code is equal 403', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 403);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 403); })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
-        final result = RequestExecutor().executeGetContentRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeGetContentRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<ForbiddenException>()));
       });
       test('throw a NotFoundException if the http response status code is equal 404', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 404);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 404); })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
-        final result = RequestExecutor().executeGetContentRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeGetContentRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<NotFoundException>()));
       });
       test('throw a GenericErrorException otherwise', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 500);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 500); })
         );
         final getContentFilters = GetContentFilters(publicId: 'test-publicId');
-        final result = RequestExecutor().executeGetContentRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeGetContentRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<GenericErrorException>()));
       });
     });
 
     group('executeSearchContentsRequest test', () {
-      test('return a ContentResponse if http request completes succesfully', () async {
+      test('return a ContentResponse if http request completes successfully', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response(jsonEncode(mockedSearch), 200);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response(jsonEncode(mockedSearch), 200); })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
-        final result = RequestExecutor().executeSearchContentsRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeSearchContentsRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(await result, const TypeMatcher<PaginatedResponse>());
       });
       test('throw a BadRequestException if the http response status code is equal 400', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 400);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 400); })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
-        final result = RequestExecutor().executeSearchContentsRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeSearchContentsRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<BadRequestException>()));
       });
       test('throw a ForbiddenException if the http response status code is equal 403', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 403);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 403); })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
-        final result = RequestExecutor().executeSearchContentsRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeSearchContentsRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<ForbiddenException>()));
       });
       test('throw a NotFoundException if the http response status code is equal 404', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 404);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 404); })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
-        final result = RequestExecutor().executeSearchContentsRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeSearchContentsRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<NotFoundException>()));
       });
       test('throw a GenericErrorException otherwise', () async {
         final mockedConfiguration = Configuration(
-            spaceId: 'test-spaceId',
-            host: 'fake-host-for-tests',
-            timeout: 5000,
-            client: MockClient((request) async {
-              return Response('{}', 500);
-            })
+          spaceId: 'test-spaceId',
+          host: 'fake-host-for-tests',
+          timeout: 5000,
+          client: MockClient((request) async { return Response('{}', 500); })
         );
         final getContentFilters = SearchContentsFilters(take: 10, skip: 0, publicId: ['test-publicId']);
-        final result = RequestExecutor().executeSearchContentsRequest(
-            path: 'a/test/path', apiKey: 'a-test-key', config: mockedConfiguration, filters: getContentFilters
+        final result = RequestExecutor().executeSearchContentsRequest<MockedContentResult>(
+          path: 'a/test/path',
+          apiKey: 'a-test-key',
+          config: mockedConfiguration,
+          filters: getContentFilters,
+          fromJson: MockedContentResult.fromJson
         );
         expect(() async => await result, throwsA(isA<GenericErrorException>()));
       });

@@ -59,7 +59,6 @@ class Media {
       publicUrl = publicUrl.replaceAll(
           _transformationUrlParam, transformations.getStringTransformations());
     } else {
-      print('$_transformationUrlParam/');
       publicUrl = publicUrl.replaceAll('$_transformationUrlParam/', '');
     }
     return publicUrl;

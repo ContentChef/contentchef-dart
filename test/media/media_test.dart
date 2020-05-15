@@ -17,7 +17,7 @@ void main() {
       test('to throw an exception is the publicId is not provided', () {
         expect(() => mediaUtil.getUrl(publicId: null), throwsException);
       });
-      test('expect to return an url without transnformation if transformations are not provided', () {
+      test('expect to return an url without transformation if transformations are not provided', () {
         final mockedUrlResult = 'https://res.cloudinary.com/contentchef/image/upload/v1/a-test-media-publicId';
         expect(mediaUtil.getUrl(publicId: mockedMediaPublicId), equals(mockedUrlResult));
       });
