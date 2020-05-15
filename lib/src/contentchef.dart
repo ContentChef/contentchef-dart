@@ -28,7 +28,7 @@ class ContentChef {
       TargetDateResolver targetDateResolver}) {
     if (configuration == null) {
       throw Exception(
-          'the configuration cannot be null to configure ContenChef client');
+          'the configuration cannot be null to configure ContentChef client');
     }
     _configuration = configuration;
     _targetDateResolver = targetDateResolver;

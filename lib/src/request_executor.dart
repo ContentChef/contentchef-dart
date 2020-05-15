@@ -66,6 +66,7 @@ class RequestExecutor {
   /// - apiKey: the space apiKey
   /// - config: Configuration instance
   /// - filters: a map of filters used as queryParameters in the api request
+  /// - fromJson: FromJsonDef<T> function (used to serialize payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
   ///     Fail =>    returns a BadRequestException if the response statusCode is equal to 400;
@@ -77,6 +78,7 @@ class RequestExecutor {
     @required String apiKey,
     @required Configuration config,
     @required GetContentFilters filters,
+    @required FromJsonDef<T> fromJson,
   }) async {
     try {
       var requestBodyResult = await _executeRequest(
@@ -84,7 +86,7 @@ class RequestExecutor {
           apiKey: apiKey,
           config: config,
           filters: filters.toQueryParametersMap());
-      return ContentResponse<T>(requestBodyResult);
+      return ContentResponse<T>.fromJson(requestBodyResult, fromJson);
     } catch (e) {
       rethrow;
     }
@@ -97,6 +99,7 @@ class RequestExecutor {
   /// - apiKey: the space apiKey
   /// - config: Configuration instance
   /// - filters: a map of filters used as queryParameters in the api request
+  /// - fromJson: FromJsonDef<T> function (used to serialize the items payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of PaginatedResponse<T> with items(ContentResponse<T>) attribute of the defined type.
   ///     Fail =>    returns a BadRequestException if the response statusCode is equal to 400;
@@ -108,6 +111,7 @@ class RequestExecutor {
     @required String apiKey,
     @required Configuration config,
     @required SearchContentsFilters filters,
+    @required FromJsonDef<T> fromJson,
   }) async {
     try {
       var requestBodyResult = await _executeRequest(
@@ -115,7 +119,7 @@ class RequestExecutor {
           apiKey: apiKey,
           config: config,
           filters: filters.toQueryParametersMap());
-      return PaginatedResponse<T>(requestBodyResult);
+      return PaginatedResponse<T>.fromJson(requestBodyResult, fromJson);
     } catch (e) {
       rethrow;
     }

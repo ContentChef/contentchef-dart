@@ -52,21 +52,29 @@ class OnlineChannel {
   ///
   /// - Parameters:
   /// - filters: GetContentFilters instance
+  /// - fromJson: FromJsonDef<T> function (used to serialize payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to ContentResponse<T> failed;
   ///
-  Future<ContentResponse<T>> getContent<T>(
-      {@required GetContentFilters filters}) async {
+  Future<ContentResponse<T>> getContent<T>({
+    @required GetContentFilters filters,
+    @required FromJsonDef<T> fromJson,
+  })async {
+    if (fromJson == null) {
+      throw Exception('to correctly retrieve a content a fromJson function cannot be null');
+    }
     var onlineContentPath = getOnlinePath(
         spaceId: _config.spaceId,
         requestType: RequestTypes.content,
         channel: _publishingChannel);
     var result = await _requestExecutor.executeGetContentRequest<T>(
-        path: onlineContentPath,
-        apiKey: _apiKey,
-        config: _config,
-        filters: filters);
+      path: onlineContentPath,
+      apiKey: _apiKey,
+      config: _config,
+      filters: filters,
+      fromJson: fromJson,
+    );
     return result;
   }
 
@@ -74,21 +82,29 @@ class OnlineChannel {
   ///
   /// - Parameters:
   /// - filters: SearchContentFilters instance
+  /// - fromJson: FromJsonDef<T> function (used to serialize the items payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of PaginatedResponse<T> with items (ContentResponse<T>) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to PaginatedResponse<T> failed;
   ///
-  Future<PaginatedResponse<T>> searchContents<T>(
-      {@required SearchContentsFilters filters}) async {
+  Future<PaginatedResponse<T>> searchContents<T>({
+    @required SearchContentsFilters filters,
+    @required FromJsonDef<T> fromJson,
+  }) async {
+    if (fromJson == null) {
+      throw Exception('to correctly retrieve contents a fromJson function cannot be null');
+    }
     var onlineSearchPath = getOnlinePath(
-        spaceId: _config.spaceId,
-        requestType: RequestTypes.search,
-        channel: _publishingChannel);
+      spaceId: _config.spaceId,
+      requestType: RequestTypes.search,
+      channel: _publishingChannel);
     return await _requestExecutor.executeSearchContentsRequest<T>(
-        path: onlineSearchPath,
-        apiKey: _apiKey,
-        config: _config,
-        filters: filters);
+      path: onlineSearchPath,
+      apiKey: _apiKey,
+      config: _config,
+      filters: filters,
+      fromJson: fromJson,
+    );
   }
 }
 
@@ -147,13 +163,18 @@ class PreviewChannel extends RequestExecutor {
   ///
   /// - Parameters:
   /// - filters: GetContentFilters instance
+  /// - fromJson: FromJsonDef<T> function (used to serialize payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of ContentResponse<T> with payload(T) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to ContentResponse<T> failed;
   ///
   Future<ContentResponse<T>> getContent<T>({
     @required GetContentFilters filters,
+    @required FromJsonDef<T> fromJson,
   }) async {
+    if (fromJson == null) {
+      throw Exception('to correctly retrieve a content a fromJson function cannot be null');
+    }
     var previewContentPath = getPreviewPath(
         spaceId: _config.spaceId,
         requestType: RequestTypes.content,
@@ -167,6 +188,7 @@ class PreviewChannel extends RequestExecutor {
       getContentFilters['targetDate'] = targetDate;
     }
     return await _requestExecutor.executeGetContentRequest<T>(
+        fromJson: fromJson,
         path: previewContentPath,
         apiKey: _apiKey,
         config: _config,
@@ -177,13 +199,18 @@ class PreviewChannel extends RequestExecutor {
   ///
   /// - Parameters:
   /// - filters: SearchContentFilters instance
+  /// - fromJson: FromJsonDef<T> function (used to serialize the items payload attribute as instance of T)
   /// - Returns:
   ///     Success => returns an instance of PaginatedResponse<T> with items (ContentResponse<T>) attribute of the defined type.
   ///     Fail =>    returns an exception if the response statusCode is < 200 or > 299 or the mapping to PaginatedResponse<T> failed;
   ///
   Future<PaginatedResponse<T>> searchContents<T>({
     @required SearchContentsFilters filters,
+    @required FromJsonDef<T> fromJson,
   }) async {
+    if (fromJson == null) {
+      throw Exception('to correctly retrieve contents a fromJson function cannot be null');
+    }
     var previewSearchPath = getPreviewPath(
         spaceId: _config.spaceId,
         requestType: RequestTypes.search,
@@ -196,7 +223,8 @@ class PreviewChannel extends RequestExecutor {
     if (targetDate != null) {
       searchContentsFilters['targetDate'] = targetDate;
     }
-    return await _requestExecutor.executeSearchContentsRequest(
+    return await _requestExecutor.executeSearchContentsRequest<T>(
+        fromJson: fromJson,
         path: previewSearchPath,
         apiKey: _apiKey,
         config: _config,
