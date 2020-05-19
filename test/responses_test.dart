@@ -34,6 +34,24 @@ final mockedSearchResult = {
   'items': [mockedContentResult]
 };
 
+class MockedContentResult {
+  String title;
+
+  MockedContentResult({
+    this.title,
+  });
+
+  static MockedContentResult fromJson(Map<String, dynamic> json) {
+    return MockedContentResult(
+      title: json['title'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'title': title
+  };
+}
+
 void main() {
   group('Responses classes tests', () {
     ResponseMetadata responseMetadata;
@@ -42,14 +60,14 @@ void main() {
     PaginatedResponse<dynamic> paginatedResponse;
 
     setUp(() {
-      responseMetadata = ResponseMetadata(mockedResMetadata);
-      requestContext = RequestContext(mockedReqContext);
-      contentResponse = ContentResponse<dynamic>({
+      responseMetadata = ResponseMetadata.fromJson(mockedResMetadata);
+      requestContext = RequestContext.fromJson(mockedReqContext);
+      contentResponse = ContentResponse<MockedContentResult>.fromJson({
         ...mockedContentResult,
         'metadata': mockedResMetadata,
         'requestContext': mockedReqContext
-      });
-      paginatedResponse = PaginatedResponse<dynamic>({
+      }, MockedContentResult.fromJson);
+      paginatedResponse = PaginatedResponse<MockedContentResult>.fromJson({
         ...mockedSearchResult,
         'requestContext': mockedReqContext,
         'items': [{
@@ -57,10 +75,10 @@ void main() {
           'metadata': mockedResMetadata,
           'requestContext': mockedReqContext
         }]
-      });
+      }, MockedContentResult.fromJson);
     });
 
-    test('ResponseMatadata toJson return a valid json', () {
+    test('ResponseMetadata toJson return a valid json', () {
       expect(jsonEncode(responseMetadata), equals(jsonEncode(mockedResMetadata)));
     });
 

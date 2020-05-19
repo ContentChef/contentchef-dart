@@ -11,11 +11,11 @@ void main() {
       expect(() => ContentChef(configuration: null), throwsException);
     });
 
-    test('Initialize succesfully without a targetDateResolver', () {
+    test('Initialize successfully without a targetDateResolver', () {
       expect(ContentChef(configuration: validConfiguration), const TypeMatcher<ContentChef>());
     });
 
-    test('Initialize succesfully with a targetDateResolver', () {
+    test('Initialize successfully with a targetDateResolver', () {
       expect(ContentChef(configuration: validConfiguration, targetDateResolver: validTargetDateResolver), const TypeMatcher<ContentChef>());
     });
 
