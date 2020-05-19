@@ -1,6 +1,6 @@
 name: contentchef_dart
 description: The headless CMS designed to accelerate the success of any digital experience. This is the client for any dart/flutter applications.
-version: 1.0.2
+version: 1.0.3
 homepage: https://www.contentchef.io
 repository: https://github.com/ContentChef/contentchef-dart
 documentation: https://docs.contentchef.io/

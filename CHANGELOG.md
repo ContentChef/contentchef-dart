@@ -1,3 +1,5 @@
+## 1.0.3
+
 - add `fromJson` param in `GetContent` and `SearchContents` methods to help the user to serialize contents payload 
 
 ## 1.0.2

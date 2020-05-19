@@ -185,7 +185,7 @@ Add this to your package's pubspec.yaml file:
 ``` yaml
 
     dependencies:
-        contentchef_dart: ^1.0.0
+        contentchef_dart: ^1.0.3
 
 ```
 
