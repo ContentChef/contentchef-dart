@@ -37,7 +37,6 @@ class RequestExecutor {
     var response = (await config.httpClient.get(uri, headers: {
       'X-SPACE-D-API-Key': apiKey,
     }).timeout(Duration(milliseconds: config.timeout)));
-    config.httpClient.close();
 
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       return jsonDecode(response.body);
