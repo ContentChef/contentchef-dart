@@ -35,7 +35,7 @@ class RequestExecutor {
         path: path,
         queryParameters: filters);
     var response = (await config.httpClient.get(uri, headers: {
-      'X-SPACE-D-API-Key': apiKey,
+      'X-Chef-Key': apiKey,
     }).timeout(Duration(milliseconds: config.timeout)));
 
     if (response.statusCode >= 200 && response.statusCode <= 299) {
