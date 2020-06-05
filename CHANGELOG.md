@@ -1,3 +1,5 @@
+- change apiKey header name from `X-SPACE-D-API-Key` to `X-Chef-Key`
+
 ## 1.0.3
 
 - add `fromJson` param in `GetContent` and `SearchContents` methods to help the user to serialize contents payload 
