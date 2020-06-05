@@ -1,3 +1,5 @@
+## 1.0.4
+
 - change apiKey header name from `X-SPACE-D-API-Key` to `X-Chef-Key`
 
 ## 1.0.3
