@@ -61,6 +61,6 @@ class Media {
     } else {
       publicUrl = publicUrl.replaceAll('$_transformationUrlParam/', '');
     }
-    return publicUrl;
+    return Uri.encodeFull(publicUrl);
   }
 }
