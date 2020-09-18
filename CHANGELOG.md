@@ -1,3 +1,7 @@
+## 1.0.5
+
+- encode url from `getUrl` media's method
+
 ## 1.0.4
 
 - change apiKey header name from `X-SPACE-D-API-Key` to `X-Chef-Key`
