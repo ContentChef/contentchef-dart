@@ -1,3 +1,9 @@
+## 1.1.0
+
+- add `ResourceType` enum to `Media`
+- add `rawFileUrl`, `videoUrl` and `imageUrl` to `Media`
+- change `getUrl` to consider the provided `resourceType` and build the url accordingly
+
 ## 1.0.5
 
 - encode url from `getUrl` media's method

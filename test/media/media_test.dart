@@ -81,9 +81,6 @@ void main() {
             'https://res.cloudinary.com/contentchef/image/upload/v1/a%20publicId%20with%20spaces';
         expect(mediaUtil.getUrl(publicId: mockedMediaPublicIdWithSpaces),
             equals(mockedUrlResult));
-
-        print(mediaUtil.getUrl(
-            publicId: 'sunshine-2960/zqWMP4vYsNQ/Music_Vid/City Life'));
       });
       test(
           'expect to return an url with transformations if transformations are provided',
