@@ -10,6 +10,54 @@ void main() {
       expect(Media(), const TypeMatcher<Media>());
     });
 
+    group('rawFileUrl', () {
+      final media = Media();
+      final mockedPublicId = 'a public id';
+
+      test('throw exception when publicId not provided', () {
+        expect(() => media.rawFileUrl(publicId: null), throwsException);
+      });
+
+      test('return expected url', () {
+        final mockedUrlResult =
+            'https://res.cloudinary.com/contentchef/raw/upload/v1/a%20public%20id';
+        expect(media.rawFileUrl(publicId: mockedPublicId),
+            equals(mockedUrlResult));
+      });
+    });
+
+    group('videoUrl', () {
+      final media = Media();
+      final mockedPublicId = 'a public id';
+
+      test('throw exception when publicId not provided', () {
+        expect(() => media.videoUrl(publicId: null), throwsException);
+      });
+
+      test('return expected url', () {
+        final mockedUrlResult =
+            'https://res.cloudinary.com/contentchef/video/upload/v1/a%20public%20id';
+        expect(
+            media.videoUrl(publicId: mockedPublicId), equals(mockedUrlResult));
+      });
+    });
+
+    group('imageUrl', () {
+      final media = Media();
+      final mockedPublicId = 'a public id';
+
+      test('throw exception when publicId not provided', () {
+        expect(() => media.imageUrl(publicId: null), throwsException);
+      });
+
+      test('return expected url', () {
+        final mockedUrlResult =
+            'https://res.cloudinary.com/contentchef/image/upload/v1/a%20public%20id';
+        expect(
+            media.imageUrl(publicId: mockedPublicId), equals(mockedUrlResult));
+      });
+    });
+
     group('getUrl method tests', () {
       final mediaUtil = Media();
       final mockedMediaPublicId = 'a-test-media-publicId';
