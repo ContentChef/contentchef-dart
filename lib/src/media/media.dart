@@ -20,6 +20,11 @@ const _resourceTypeParam = 'RESOURCE_TYPE';
 const _defaultUrl =
     'https://res.cloudinary.com/$_cloudNameUrlParam/$_resourceTypeParam/upload/$_transformationUrlParam/v1/$_publicIdUrlParam';
 
+/// When using `getUrl` method this enum is needed to correctly retrieve the resource
+///
+///   - `image`: for images
+///   - `video`: for videos
+///   - `raw`: for document files (pdf, doc) and audio files
 enum ResourceType { image, video, raw }
 
 /// ContentChef media handler class used to retrieve the media publicUrl
