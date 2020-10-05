@@ -114,9 +114,12 @@ class Media {
   ///
   String videoUrl(
       {@required String publicId, VideoTransformations transformations}) {
+    var videoTransformations =
+        transformations ?? VideoTransformations(autoFormat: true);
+
     return getUrl(
         publicId: publicId,
-        transformations: transformations,
+        transformations: videoTransformations,
         resourceType: ResourceType.video);
   }
 

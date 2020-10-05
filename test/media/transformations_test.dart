@@ -168,7 +168,6 @@ void main() {
       test('return string quality set to auto', () {
         final transformations =
             VideoTransformations().getStringTransformations();
-        print(transformations);
         expect(transformations.contains('q_auto'), isTrue);
       });
     });
