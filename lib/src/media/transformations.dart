@@ -88,13 +88,8 @@ class MediaTransformations {
     _mediaFormat = mediaFormat;
   }
 
-  /// Retrieves all media transformations
-  ///
-  /// - Parameters:
-  /// - Returns: a string that contains all transformation
-  ///
-  String getStringTransformations() {
-    var transformations = [];
+  String buildTransformations([List<String> mediaSpecificTransformation]) {
+    var transformations = mediaSpecificTransformation ?? [];
     if (_mediaWidth != null) {
       transformations.add('w_$_mediaWidth');
     }
@@ -110,5 +105,110 @@ class MediaTransformations {
     }
 
     return transformations.join(',');
+  }
+
+  /// Retrieves all media transformations
+  ///
+  /// - Parameters:
+  /// - Returns: a string that contains all transformation
+  ///
+  String getStringTransformations() {
+    return buildTransformations();
+  }
+}
+
+/// Class needed to create a VideoTransformations that enables resizes and cropping videos to optimize file size
+class CroppingMode {
+  final String _type;
+  CroppingMode._fromValue(this._type);
+
+  @override
+  String toString() {
+    return _type;
+  }
+
+  /// Change the size of the video exactly to the given width and height without necessarily retaining the original aspect ratio
+  static CroppingMode scale = CroppingMode._fromValue('scale');
+
+  /// Change video size to fit in the given width and height while retaining the original aspect ratio with all the original video parts visible
+  static CroppingMode fit = CroppingMode._fromValue('fit');
+
+  /// Create a video with the exact given width and height while retaining original proportions
+  static CroppingMode fill = CroppingMode._fromValue('fill');
+
+  /// The limit mode is used for creating a video that does not exceed the given width and height
+  static CroppingMode limit = CroppingMode._fromValue('limit');
+
+  /// Resize the video to fill the given width and height while retaining the original aspect ratio
+  static CroppingMode pad = CroppingMode._fromValue('pad');
+
+  /// Same as the pad mode, but doesn't scale the video up if your requested dimensions are larger than the original video's
+  static CroppingMode lpad = CroppingMode._fromValue('lpad');
+
+  /// Extract only part of a given width and height out of the original video.
+  static CroppingMode crop = CroppingMode._fromValue('crop');
+}
+
+/// ContentChef video's transformations handler class used to retrieve the video transformations
+///
+/// Examples:
+///
+///   var transformations1 = VideoTransformations(autoFormat: true, mediaWidth: 100, mediaHeight: 200, croppingMode: CroppingMode.fit);
+///   var transformations2 = VideoTransformations(quality: 20, mediaWidth: 100, mediaHeight: 200);
+///
+class VideoTransformations extends MediaTransformations {
+  int _videoQuality;
+  CroppingMode _croppingMode;
+
+  /// Initializes a new 'VideoTransformations'
+  ///
+  /// Parameters:
+  /// - autoFormat: set this value to true in order to perform automatic format selection based on the requesting browser
+  /// - mediaHeight: set this value if you want to retrieve a media with a specific height
+  /// - mediaWidth: set this value if you want to retrieve a media with a specific width
+  /// - mediaFormat: set this value if you want to retrieve the media with a different format
+  /// - videoQuality: defaults to 'auto' and should be a value between 0 and 100,
+  /// - croppingMode: resizes video to fit your application and optimizes file size
+  /// - Returns: an instance of `VideoTransformations`.
+  ///
+  /// - autoFormat param always override the mediaFormat for a better media optimization
+  /// - if autoFormat or mediaFormat params are not specified media will be retrieved with its original format
+  ///
+  VideoTransformations({
+    bool autoFormat,
+    int mediaHeight,
+    int mediaWidth,
+    MediaFormats mediaFormat,
+    int videoQuality,
+    CroppingMode croppingMode,
+  }) : super(
+            autoFormat: autoFormat,
+            mediaHeight: mediaHeight,
+            mediaWidth: mediaWidth,
+            mediaFormat: mediaFormat) {
+    _videoQuality = videoQuality;
+    _croppingMode = croppingMode;
+  }
+
+  /// Retrieves all media transformations
+  ///
+  /// - Parameters:
+  /// - Returns: a string that contains all transformation
+  ///
+  @override
+  String getStringTransformations() {
+    var transformations = <String>[];
+
+    if (_videoQuality != null) {
+      transformations.add('q_$_videoQuality');
+    } else {
+      transformations.add('q_auto');
+    }
+
+    if (_croppingMode != null) {
+      transformations.add('c_$_croppingMode');
+    }
+
+    return buildTransformations(transformations);
   }
 }
