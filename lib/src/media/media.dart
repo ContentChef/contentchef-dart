@@ -109,14 +109,17 @@ class Media {
   ///
   /// - Parameters:
   /// - publicId: the media publicId (retrieved from a published content that have a media field)
-  /// - transformations: instance of `MediaTransformations`
+  /// - transformations: instance of `VideoTransformations`
   /// - Returns: the media public url
   ///
   String videoUrl(
-      {@required String publicId, MediaTransformations transformations}) {
+      {@required String publicId, VideoTransformations transformations}) {
+    var videoTransformations =
+        transformations ?? VideoTransformations(autoFormat: true);
+
     return getUrl(
         publicId: publicId,
-        transformations: transformations,
+        transformations: videoTransformations,
         resourceType: ResourceType.video);
   }
 

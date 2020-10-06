@@ -36,7 +36,8 @@ void main() {
 
       test('return expected url', () {
         final mockedUrlResult =
-            'https://res.cloudinary.com/contentchef/video/upload/v1/a%20public%20id';
+            'https://res.cloudinary.com/contentchef/video/upload/q_auto,f_auto/v1/a%20public%20id';
+
         expect(
             media.videoUrl(publicId: mockedPublicId), equals(mockedUrlResult));
       });
