@@ -1,3 +1,7 @@
+## 1.2.0
+- add `VideoTransformations` with new transformations `croppingMode` and `quality`
+- change `videoUrl` now transformations defaults to a `VideoTransformations` with `autoFormat` set to `true` and `quality` to `auto`
+
 ## 1.1.0
 
 - add `ResourceType` enum to `Media`
